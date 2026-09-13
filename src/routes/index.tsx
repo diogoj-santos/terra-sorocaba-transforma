@@ -281,7 +281,7 @@ function Index() {
                     className="h-full w-full object-cover transition-transform duration-300 motion-safe:lg:group-hover:scale-[1.04]"
                   />
                 </div>
-                <figcaption className="border-t-2 border-gold px-3 py-4 font-display text-sm font-extrabold uppercase leading-tight sm:text-base">{title}</figcaption>
+                <figcaption className="border-t-2 border-gold px-3 py-4 font-display text-sm font-extrabold uppercase leading-tight text-foreground sm:text-base">{title}</figcaption>
               </figure>
             ))}
           </div>
