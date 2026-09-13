@@ -12,3 +12,5 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+Sitemap: https://adao-terraplenagem.vercel.app/sitemap.xml
