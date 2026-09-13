@@ -122,7 +122,7 @@ function Index() {
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 lg:h-24 lg:px-8">
           <Brand compact />
           <nav className="hidden items-center gap-7 lg:flex" aria-label="Navegação principal">
-            {[['Sobre', '#sobre'], ['Serviços', '#servicos'], ['Equipamentos', '#equipamentos'], ['Atendimento', '#atendimento'], ['Região', '#regiao']].map(([label, href]) => (
+            {([['Sobre', '#sobre'], ['Serviços', '#servicos'], ['Equipamentos', '#equipamentos'], ['Atendimento', '#atendimento'], ['Região', '#regiao']] as const).map(([label, href]) => (
               <a key={href} href={href} className="font-display text-sm font-bold tracking-[0.06em] text-foreground/80 transition-colors hover:text-gold">{label.toUpperCase()}</a>
             ))}
           </nav>
@@ -162,7 +162,7 @@ function Index() {
             <p className="text-lg leading-relaxed text-primary-foreground/75">A Adão Terraplenagem nasceu em Araçoiaba da Serra e cresceu atendendo toda a região de Sorocaba com responsabilidade, excelência e dedicação em cada serviço.</p>
             <p className="mt-5 leading-relaxed text-primary-foreground/65">Há 14 anos, preparamos o terreno para os projetos dos nossos clientes saírem do papel. Cuidamos de cada etapa com atenção, equipamentos adequados e o compromisso de entregar um trabalho seguro, organizado e no prazo.</p>
             <div className="mt-8 grid gap-4 sm:grid-cols-3">
-              {[['Responsabilidade', ShieldCheck], ['Excelência', BadgeCheck], ['Dedicação', CheckCircle2]].map(([label, Icon]) => <div key={label as string} className="flex items-center gap-3 border-t border-primary-foreground/15 pt-4"><Icon className="h-5 w-5 text-gold" /><strong className="font-display text-sm tracking-[0.05em]">{(label as string).toUpperCase()}</strong></div>)}
+              {([['Responsabilidade', ShieldCheck], ['Excelência', BadgeCheck], ['Dedicação', CheckCircle2]] as const).map(([label, Icon]) => <div key={label} className="flex items-center gap-3 border-t border-primary-foreground/15 pt-4"><Icon className="h-5 w-5 text-gold" /><strong className="font-display text-sm tracking-[0.05em]">{label.toUpperCase()}</strong></div>)}
             </div>
           </div>
         </div>
