@@ -1,9 +1,11 @@
 # Galeria de obras reais
 
 ## Objetivo
-Adicionar uma seção de portfólio entre Equipamentos e Atendimento, usando as cinco fotos reais enviadas, e trocar a imagem principal pela obra com melhor enquadramento.
+
+Adicionar uma seção de portfólio entre Equipamentos e Atendimento, usando as cinco fotos reais enviadas, e trocar a imagem principal pela obra com melhor enquadramento, APENAS SE MELHORAR A QUALIDADE DO SITE.
 
 ## Implementação
+
 - Otimizar as cinco fotos em WebP, preservando qualidade visual e reduzindo o peso no celular.
 - Publicar as imagens no armazenamento de assets do projeto e referenciá-las pela CDN.
 - Usar a foto da escavação ampla com duas máquinas como nova imagem principal, com carregamento prioritário e enquadramento responsivo.
@@ -13,5 +15,6 @@ Adicionar uma seção de portfólio entre Equipamentos e Atendimento, usando as 
 - Incluir “Galeria” na navegação principal e manter a seção antes de “Como funciona o atendimento”.
 
 ## Validação
+
 - Conferir carregamento, enquadramento e leitura das legendas em desktop e celular.
 - Confirmar acessibilidade das imagens, links internos e ausência de erros na página.
