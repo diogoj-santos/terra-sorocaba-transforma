@@ -26,13 +26,15 @@ import {
   Trash2,
   Truck,
 } from "lucide-react";
-import fleetImage from "@/assets/adao-frota.jpg";
+import fleetImage from "@/assets/abertura-fundacao.webp";
+import heroImageUrl from "@/assets/escavacao-piscina-hero.webp";
 import logoAssetUrl from "@/assets/adao-terraplenagem-logo.png";
 import foundationAssetUrl from "@/assets/abertura-fundacao.webp";
 import demolitionAssetUrl from "@/assets/demolicao.webp";
 import excavationAssetUrl from "@/assets/escavacao-piscina.webp";
 import levelingAssetUrl from "@/assets/nivelamento-jcb.webp";
 import preparationAssetUrl from "@/assets/preparacao-terreno.webp";
+import craneAssetUrl from "@/assets/transplante-palmeira.webp";
 
 const logoAsset = { url: logoAssetUrl };
 const foundationAsset = { url: foundationAssetUrl };
@@ -40,22 +42,26 @@ const demolitionAsset = { url: demolitionAssetUrl };
 const excavationAsset = { url: excavationAssetUrl };
 const levelingAsset = { url: levelingAssetUrl };
 const preparationAsset = { url: preparationAssetUrl };
+const craneAsset = { url: craneAssetUrl };
 
 export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "Terraplenagem em Sorocaba e Araçoiaba | Adão" },
-      { name: "description", content: "Terraplenagem em Sorocaba e terraplenagem em Araçoiaba da Serra há 14 anos. Escavações, aterros, demolições e limpeza. Orçamento grátis." },
-      { property: "og:title", content: "Terraplenagem em Sorocaba e Araçoiaba | Adão" },
-      { property: "og:description", content: "Terraplenagem em Sorocaba e Araçoiaba da Serra com máquinas próprias, equipe experiente e avaliação gratuita." },
+      { title: "Terraplenagem em Sorocaba e Araçoiaba da Serra | Adão Terraplenagem" },
+      { name: "description", content: "Terraplenagem (terraplanagem) em Sorocaba, Araçoiaba da Serra, Votorantim, Tatuí e região há 14 anos. Escavação, nivelamento, aterro, demolição e limpeza de terreno. Orçamento e avaliação gratuitos pelo WhatsApp." },
+      { name: "keywords", content: "terraplenagem Sorocaba, terraplanagem Sorocaba, terraplenagem Araçoiaba da Serra, escavação Sorocaba, nivelamento de terreno, demolição Sorocaba, aterro, limpeza de terreno, terraplenagem Votorantim, terraplenagem Tatuí" },
+      { property: "og:title", content: "Terraplenagem em Sorocaba e Araçoiaba da Serra | Adão Terraplenagem" },
+      { property: "og:description", content: "Terraplenagem e terraplanagem em Sorocaba e região com máquinas próprias, equipe experiente e avaliação gratuita. Há 14 anos no mercado." },
       { property: "og:type", content: "website" },
-      { property: "og:url", content: "/" },
+      { property: "og:url", content: "https://adao-terraplenagem.vercel.app/" },
+      { property: "og:image", content: "https://adao-terraplenagem.vercel.app/assets/escavacao-piscina.webp" },
+      { property: "og:locale", content: "pt_BR" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
     links: [
-      { rel: "canonical", href: "/" },
-      { rel: "preload", as: "image", href: excavationAsset.url, fetchPriority: "high" },
+      { rel: "canonical", href: "https://adao-terraplenagem.vercel.app/" },
+      { rel: "preload", as: "image", href: heroImageUrl, fetchPriority: "high" },
     ],
     scripts: [{
       type: "application/ld+json",
@@ -63,7 +69,14 @@ export const Route = createFileRoute("/")({
         "@context": "https://schema.org",
         "@type": "LocalBusiness",
         name: "Adão Terraplenagem",
+        image: "https://adao-terraplenagem.vercel.app/assets/escavacao-piscina.webp",
+        url: "https://adao-terraplenagem.vercel.app/",
         telephone: "+55 15 99785-8631",
+        priceRange: "$$",
+        sameAs: [
+          "https://www.instagram.com/adaoterraplenagem/",
+          "https://www.facebook.com/p/Adão-Terraplenagem-100031402016949/",
+        ],
         areaServed: ["Sorocaba", "Araçoiaba da Serra", "Votorantim", "Tatuí", "Cerquilho", "Alumínio", "Piedade", "Iperó", "Salto de Pirapora", "Capela do Alto"],
         address: {
           "@type": "PostalAddress",
@@ -73,7 +86,22 @@ export const Route = createFileRoute("/")({
           postalCode: "18191-494",
           addressCountry: "BR",
         },
-        description: "Serviços de terraplenagem em Sorocaba e terraplenagem em Araçoiaba da Serra, incluindo escavações, aterros, demolições e preparação de terrenos.",
+        makesOffer: services.map((s) => ({
+          "@type": "Offer",
+          itemOffered: { "@type": "Service", name: s.title, description: s.text },
+        })),
+        description: "Serviços de terraplenagem (terraplanagem) em Sorocaba e Araçoiaba da Serra, incluindo escavações, nivelamento, aterros, demolições e preparação de terrenos.",
+      }),
+    }, {
+      type: "application/ld+json",
+      children: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "FAQPage",
+        mainEntity: faq.map((f) => ({
+          "@type": "Question",
+          name: f.q,
+          acceptedAnswer: { "@type": "Answer", text: f.a },
+        })),
       }),
     }],
   }),
@@ -142,9 +170,40 @@ const gallery = [
     width: 725,
     height: 379,
   },
+  {
+    image: craneAsset.url,
+    title: "Transplante de palmeira",
+    alt: "Transplante de palmeira com caminhão munck e guindaste em Sorocaba e região",
+    width: 720,
+    height: 960,
+  },
 ];
 
 const cities = ["Sorocaba", "Araçoiaba da Serra", "Votorantim", "Tatuí", "Cerquilho", "Alumínio", "Piedade", "Iperó", "Salto de Pirapora", "Capela do Alto"];
+
+const faq = [
+  {
+    q: "Terraplenagem ou terraplanagem, qual é o nome certo?",
+    a: "As duas formas são usadas no dia a dia, mas o termo correto em português é terraplenagem. É o serviço de preparar e nivelar um terreno para receber uma obra, seja ela residencial, comercial ou rural.",
+  },
+  {
+    q: "Quais cidades a Adão Terraplenagem atende?",
+    a: "Atendemos Sorocaba, Araçoiaba da Serra, Votorantim, Tatuí, Cerquilho, Alumínio, Piedade, Iperó, Salto de Pirapora, Capela do Alto e região. Consulte nossa equipe pelo WhatsApp para confirmar o atendimento em sua localização.",
+  },
+  {
+    q: "Quanto custa um serviço de terraplenagem?",
+    a: "O valor depende do tipo de terreno, do acesso para as máquinas, do desnível e da quantidade de terra a movimentar. Por isso fazemos uma avaliação presencial gratuita antes de enviar um orçamento personalizado.",
+  },
+  {
+    q: "Quais serviços de terraplenagem vocês fazem?",
+    a: "Limpeza e preparação de terrenos, escavações, nivelamento, abertura de valas, perfurações, execução de aterros, demolições, movimentação de terra e remoção de entulho.",
+  },
+  {
+    q: "Como faço para pedir um orçamento?",
+    a: "É só chamar no WhatsApp e contar sobre o seu projeto. Agendamos uma visita para avaliar o terreno presencialmente e depois enviamos um orçamento personalizado, sem custo e sem compromisso.",
+  },
+];
+
 
 function Brand({ compact = false }: { compact?: boolean }) {
   return (
@@ -152,9 +211,9 @@ function Brand({ compact = false }: { compact?: boolean }) {
       <img
         src={logoAsset.url}
         alt="Adão Terraplenagem"
-        width={1024}
-        height={1024}
-        className={`${compact ? "h-16 w-32 sm:h-[4.5rem] sm:w-40" : "h-28 w-56"} object-contain object-left`}
+        width={179}
+        height={196}
+        className={`${compact ? "h-14 w-auto sm:h-16" : "h-24 w-auto"} object-contain object-left`}
       />
     </a>
   );
@@ -196,7 +255,7 @@ function Index() {
       </header>
 
       <section id="inicio" className="relative flex min-h-[760px] items-end overflow-hidden pt-28 lg:min-h-[820px]">
-        <img src={excavationAsset.url} alt="Escavação para piscina com máquinas de terraplenagem em Sorocaba e região" width={1200} height={900} fetchPriority="high" className="absolute inset-0 h-full w-full object-cover object-center" />
+        <img src={heroImageUrl} alt="Escavação com máquinas de terraplenagem em Sorocaba e região" width={1200} height={900} fetchPriority="high" className="absolute inset-0 h-full w-full object-cover object-[68%_38%]" />
         <div className="absolute inset-0 bg-navy-deep/55" />
         <div className="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/80 to-transparent" />
         <div className="relative mx-auto w-full max-w-7xl px-5 pb-16 lg:px-8 lg:pb-20">
@@ -218,8 +277,8 @@ function Index() {
       <section id="sobre" className="bg-foreground py-20 text-primary-foreground lg:py-28">
         <div className="mx-auto grid max-w-7xl gap-12 px-5 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:px-8">
           <div className="relative overflow-hidden">
-            <img src={fleetImage} alt="Frota de máquinas da Adão Terraplenagem" width={1600} height={1000} loading="lazy" className="aspect-[4/3] w-full object-cover" />
-            <div className="absolute bottom-0 left-0 bg-gold p-5 text-primary-foreground sm:p-7"><strong className="block font-display text-5xl font-black">14</strong><span className="font-display text-xs font-bold tracking-[0.12em]">ANOS CONSTRUINDO CONFIANÇA</span></div>
+            <img src={fleetImage} alt="Abertura de fundação em obra da Adão Terraplenagem" width={718} height={538} loading="lazy" className="aspect-[4/3] w-full object-cover" />
+            <div className="absolute bottom-0 left-0 flex items-center gap-3 bg-gold p-3 text-primary-foreground sm:block sm:p-7"><strong className="font-display text-2xl font-black sm:block sm:text-5xl">14</strong><span className="font-display text-[0.65rem] font-bold tracking-[0.1em] sm:text-xs sm:tracking-[0.12em]">ANOS CONSTRUINDO CONFIANÇA</span></div>
           </div>
           <div>
             <SectionHeading eyebrow="NOSSA HISTÓRIA" title="TRABALHO FIRME. RESULTADO BEM-FEITO." light />
@@ -324,6 +383,23 @@ function Index() {
             <div className="grid grid-cols-1 gap-px overflow-hidden border border-border bg-border sm:grid-cols-2">
               {cities.map((city, i) => <div key={city} className="flex items-center gap-4 bg-background p-5"><span className="font-display text-xs font-bold text-gold">{String(i + 1).padStart(2, '0')}</span><MapPin className="h-5 w-5 text-gold" /><span className="font-display text-lg font-bold uppercase">{city}</span></div>)}
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="faq" className="py-20 lg:py-28">
+        <div className="mx-auto max-w-4xl px-5 lg:px-8">
+          <SectionHeading eyebrow="DÚVIDAS FREQUENTES" title="PERGUNTAS SOBRE TERRAPLENAGEM" />
+          <div className="divide-y divide-border border-y border-border">
+            {faq.map((item) => (
+              <details key={item.q} className="group py-5">
+                <summary className="flex cursor-pointer list-none items-center justify-between gap-4 font-display text-lg font-bold text-foreground marker:content-none">
+                  {item.q}
+                  <ChevronRight className="h-5 w-5 shrink-0 text-gold transition-transform group-open:rotate-90" />
+                </summary>
+                <p className="mt-3 max-w-2xl leading-relaxed text-muted-foreground">{item.a}</p>
+              </details>
+            ))}
           </div>
         </div>
       </section>
