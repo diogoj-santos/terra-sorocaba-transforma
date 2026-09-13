@@ -27,12 +27,19 @@ import {
   Truck,
 } from "lucide-react";
 import fleetImage from "@/assets/adao-frota.jpg";
-import logoAsset from "@/assets/adao-terraplenagem-logo.png.asset.json";
-import foundationAsset from "@/assets/abertura-fundacao.webp.asset.json";
-import demolitionAsset from "@/assets/demolicao.webp.asset.json";
-import excavationAsset from "@/assets/escavacao-piscina.webp.asset.json";
-import levelingAsset from "@/assets/nivelamento-jcb.webp.asset.json";
-import preparationAsset from "@/assets/preparacao-terreno.webp.asset.json";
+import logoAssetUrl from "@/assets/adao-terraplenagem-logo.png";
+import foundationAssetUrl from "@/assets/abertura-fundacao.webp";
+import demolitionAssetUrl from "@/assets/demolicao.webp";
+import excavationAssetUrl from "@/assets/escavacao-piscina.webp";
+import levelingAssetUrl from "@/assets/nivelamento-jcb.webp";
+import preparationAssetUrl from "@/assets/preparacao-terreno.webp";
+
+const logoAsset = { url: logoAssetUrl };
+const foundationAsset = { url: foundationAssetUrl };
+const demolitionAsset = { url: demolitionAssetUrl };
+const excavationAsset = { url: excavationAssetUrl };
+const levelingAsset = { url: levelingAssetUrl };
+const preparationAsset = { url: preparationAssetUrl };
 
 export const Route = createFileRoute("/")({
   component: Index,
