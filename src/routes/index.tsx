@@ -28,20 +28,24 @@ import {
 } from "lucide-react";
 import heroImage from "@/assets/adao-hero.jpg";
 import fleetImage from "@/assets/adao-frota.jpg";
+import logoAsset from "@/assets/adao-terraplenagem-logo.png.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Index,
   head: () => ({
     meta: [
-      { title: "Terraplenagem em Sorocaba | Adão Terraplenagem" },
-      { name: "description", content: "Terraplenagem em Sorocaba e Araçoiaba da Serra há 14 anos. Escavações, aterros, demolições e limpeza de terrenos. Orçamento gratuito." },
-      { property: "og:title", content: "Adão Terraplenagem | Sorocaba e Região" },
-      { property: "og:description", content: "Há 14 anos transformando terrenos com responsabilidade, excelência e dedicação. Solicite uma avaliação gratuita." },
+      { title: "Terraplenagem em Sorocaba e Araçoiaba | Adão" },
+      { name: "description", content: "Terraplenagem em Sorocaba e terraplenagem em Araçoiaba da Serra há 14 anos. Escavações, aterros, demolições e limpeza. Orçamento grátis." },
+      { property: "og:title", content: "Terraplenagem em Sorocaba e Araçoiaba | Adão" },
+      { property: "og:description", content: "Terraplenagem em Sorocaba e Araçoiaba da Serra com máquinas próprias, equipe experiente e avaliação gratuita." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "/" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "/" }],
+    links: [
+      { rel: "canonical", href: "/" },
+      { rel: "preload", as: "image", href: heroImage, fetchPriority: "high" },
+    ],
     scripts: [{
       type: "application/ld+json",
       children: JSON.stringify({
@@ -50,13 +54,24 @@ export const Route = createFileRoute("/")({
         name: "Adão Terraplenagem",
         telephone: "+55 15 99785-8631",
         areaServed: ["Sorocaba", "Araçoiaba da Serra", "Votorantim", "Tatuí", "Cerquilho", "Alumínio", "Piedade", "Iperó", "Salto de Pirapora", "Capela do Alto"],
-        description: "Serviços de terraplenagem, escavações, aterros, demolições e preparação de terrenos em Sorocaba e região.",
+        address: {
+          "@type": "PostalAddress",
+          streetAddress: "Estr. Irmã Theoberta, 101 - Jd Arco Verde",
+          addressLocality: "Araçoiaba da Serra",
+          addressRegion: "SP",
+          postalCode: "18191-494",
+          addressCountry: "BR",
+        },
+        description: "Serviços de terraplenagem em Sorocaba e terraplenagem em Araçoiaba da Serra, incluindo escavações, aterros, demolições e preparação de terrenos.",
       }),
     }],
   }),
 });
 
-const whatsapp = "https://wa.me/5515997858631?text=Olá!%20Gostaria%20de%20solicitar%20um%20orçamento%20gratuito.";
+const whatsapp = "https://wa.me/5515997858631";
+const mapUrl = "https://www.google.com/maps/search/?api=1&query=Estr.+Irmã+Theoberta,+101,+Jd+Arco+Verde,+Araçoiaba+da+Serra+-+SP,+18191-494";
+const instagram = "https://www.instagram.com/adaoterraplenagem/";
+const facebook = "https://www.facebook.com/p/Adão-Terraplenagem-100031402016949/";
 
 const services = [
   { icon: Sparkles, title: "Limpeza e preparação", text: "Terrenos prontos para o início seguro da sua obra." },
@@ -84,21 +99,21 @@ const cities = ["Sorocaba", "Araçoiaba da Serra", "Votorantim", "Tatuí", "Cerq
 
 function Brand({ compact = false }: { compact?: boolean }) {
   return (
-    <a href="#inicio" className="group inline-flex items-center gap-3" aria-label="Adão Terraplenagem — início">
-      <span className={`${compact ? "h-10 w-10" : "h-12 w-12"} flex shrink-0 items-center justify-center border border-gold bg-gold text-primary-foreground`}>
-        <Construction className={compact ? "h-6 w-6" : "h-7 w-7"} strokeWidth={2.2} />
-      </span>
-      <span className="leading-none">
-        <strong className={`${compact ? "text-2xl" : "text-3xl"} block font-display font-black tracking-normal text-gold`}>ADÃO</strong>
-        <span className="mt-1 block font-display text-[0.64rem] font-bold tracking-[0.16em] text-foreground">TERRAPLENAGEM</span>
-      </span>
+    <a href="#inicio" className="inline-flex shrink-0 items-center" aria-label="Adão Terraplenagem — início">
+      <img
+        src={logoAsset.url}
+        alt="Adão Terraplenagem"
+        width={1024}
+        height={1024}
+        className={`${compact ? "h-16 w-32 sm:h-[4.5rem] sm:w-40" : "h-28 w-56"} object-contain object-left`}
+      />
     </a>
   );
 }
 
 function WhatsAppButton({ label = "SOLICITAR ORÇAMENTO GRÁTIS", dark = false }: { label?: string; dark?: boolean }) {
   return (
-    <a href={whatsapp} target="_blank" rel="noreferrer" className={`group inline-flex min-h-14 items-center justify-center gap-3 rounded-sm px-6 font-display text-base font-extrabold tracking-[0.04em] transition-all hover:-translate-y-0.5 ${dark ? "bg-navy-deep text-foreground hover:bg-background" : "bg-gold text-primary-foreground hover:bg-gold-soft"}`}>
+    <a href={whatsapp} target="_blank" rel="noreferrer" className={`group inline-flex min-h-14 items-center justify-center gap-3 rounded-sm px-6 font-display text-base font-extrabold tracking-[0.04em] transition-colors ${dark ? "bg-navy-deep text-foreground hover:bg-background" : "bg-gold text-primary-foreground hover:bg-gold-soft"}`}>
       <MessageCircle className="h-5 w-5" />
       {label}
       <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -122,7 +137,7 @@ function Index() {
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 lg:h-24 lg:px-8">
           <Brand compact />
           <nav className="hidden items-center gap-7 lg:flex" aria-label="Navegação principal">
-            {([['Sobre', '#sobre'], ['Serviços', '#servicos'], ['Equipamentos', '#equipamentos'], ['Atendimento', '#atendimento'], ['Região', '#regiao']] as const).map(([label, href]) => (
+            {([['Sobre', '#sobre'], ['Serviços', '#servicos'], ['Equipamentos', '#equipamentos'], ['Atendimento', '#atendimento'], ['Região', '#regiao'], ['Contato', '#contato']] as const).map(([label, href]) => (
               <a key={href} href={href} className="font-display text-sm font-bold tracking-[0.06em] text-foreground/80 transition-colors hover:text-gold">{label.toUpperCase()}</a>
             ))}
           </nav>
@@ -136,7 +151,7 @@ function Index() {
         <div className="absolute inset-0 bg-navy-deep/55" />
         <div className="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/80 to-transparent" />
         <div className="relative mx-auto w-full max-w-7xl px-5 pb-16 lg:px-8 lg:pb-20">
-          <div className="max-w-3xl animate-rise">
+          <div className="max-w-3xl">
             <div className="mb-6 inline-flex items-center gap-3 border-l-2 border-gold pl-4 font-display text-sm font-bold tracking-[0.14em] text-gold sm:text-base">EXPERIÊNCIA QUE PREPARA O FUTURO</div>
             <h1 className="font-display text-5xl font-black uppercase leading-[0.91] tracking-normal text-foreground sm:text-7xl lg:text-[5.5rem]">Há 14 anos<br /><span className="text-gold">transformando terrenos</span> em Sorocaba e região</h1>
             <p className="mt-7 max-w-2xl text-base leading-relaxed text-foreground/80 sm:text-xl">Soluções completas para residências, condomínios, empresas, construtoras e propriedades rurais — com máquinas próprias e equipe experiente.</p>
@@ -246,11 +261,38 @@ function Index() {
         </div>
       </section>
 
+      <section id="contato" className="bg-foreground py-20 text-primary-foreground lg:py-28">
+        <div className="mx-auto grid max-w-7xl gap-10 px-5 lg:grid-cols-[0.75fr_1.25fr] lg:items-center lg:px-8">
+          <div>
+            <SectionHeading eyebrow="CONTATO E LOCALIZAÇÃO" title="VENHA CONVERSAR COM A NOSSA EQUIPE" light />
+            <div className="flex items-start gap-4 border-t border-primary-foreground/15 pt-6">
+              <MapPin className="mt-1 h-6 w-6 shrink-0 text-gold" />
+              <address className="not-italic leading-relaxed text-primary-foreground/75">Estr. Irmã Theoberta, 101 - Jd Arco Verde<br />Araçoiaba da Serra - SP, 18191-494</address>
+            </div>
+            <div className="mt-7 flex flex-wrap gap-3">
+              <a href={mapUrl} target="_blank" rel="noreferrer" className="inline-flex min-h-12 items-center gap-2 rounded-sm bg-gold px-5 font-display text-sm font-extrabold text-primary-foreground transition-colors hover:bg-gold-soft"><MapPin className="h-5 w-5" />VER NO MAPA</a>
+              <a href={whatsapp} target="_blank" rel="noreferrer" className="inline-flex min-h-12 items-center gap-2 rounded-sm border border-primary-foreground/25 px-5 font-display text-sm font-extrabold transition-colors hover:border-gold hover:text-gold"><MessageCircle className="h-5 w-5" />WHATSAPP</a>
+            </div>
+          </div>
+          <div className="overflow-hidden border border-primary-foreground/15 bg-background">
+            <iframe
+              src="https://maps.google.com/maps?q=Estr.+Irmã+Theoberta,+101,+Jd+Arco+Verde,+Araçoiaba+da+Serra+-+SP,+18191-494&output=embed"
+              title="Localização da Adão Terraplenagem"
+              width="100%"
+              height="300"
+              className="block border-0"
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
+          </div>
+        </div>
+      </section>
+
       <footer className="bg-navy-deep pt-16">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 pb-12 sm:grid-cols-2 lg:grid-cols-4 lg:px-8">
           <div className="sm:col-span-2"><Brand /><p className="mt-6 max-w-sm text-sm leading-relaxed text-muted-foreground">Terraplenagem com responsabilidade, excelência e dedicação em Sorocaba, Araçoiaba da Serra e região.</p></div>
-          <div><h3 className="font-display text-sm font-bold tracking-[0.12em] text-gold">CONTATO</h3><a href={whatsapp} target="_blank" rel="noreferrer" className="mt-5 block font-display text-2xl font-bold hover:text-gold">(15) 99785-8631</a><span className="mt-2 block text-sm text-muted-foreground">Orçamento e avaliação gratuitos</span></div>
-          <div><h3 className="font-display text-sm font-bold tracking-[0.12em] text-gold">ACOMPANHE</h3><div className="mt-5 flex gap-3"><a href="https://instagram.com/adaoterraplenagem" target="_blank" rel="noreferrer" aria-label="Instagram da Adão Terraplenagem" className="flex h-11 w-11 items-center justify-center border border-border hover:bg-gold hover:text-primary-foreground"><Instagram className="h-5 w-5" /></a><a href="https://facebook.com/adaoterraplenagem" target="_blank" rel="noreferrer" aria-label="Facebook da Adão Terraplenagem" className="flex h-11 w-11 items-center justify-center border border-border hover:bg-gold hover:text-primary-foreground"><Facebook className="h-5 w-5" /></a></div><span className="mt-3 block text-sm text-muted-foreground">@adaoterraplenagem</span></div>
+          <div><h3 className="font-display text-sm font-bold tracking-[0.12em] text-gold">CONTATO</h3><a href={whatsapp} target="_blank" rel="noreferrer" className="mt-5 block font-display text-2xl font-bold hover:text-gold">(15) 99785-8631</a><a href={mapUrl} target="_blank" rel="noreferrer" className="mt-3 flex max-w-xs items-start gap-2 text-sm leading-relaxed text-muted-foreground hover:text-gold"><MapPin className="mt-0.5 h-4 w-4 shrink-0" />Estr. Irmã Theoberta, 101 - Jd Arco Verde, Araçoiaba da Serra - SP</a></div>
+          <div><h3 className="font-display text-sm font-bold tracking-[0.12em] text-gold">ACOMPANHE</h3><div className="mt-5 flex gap-3"><a href={instagram} target="_blank" rel="noreferrer" aria-label="Instagram da Adão Terraplenagem" className="flex h-11 w-11 items-center justify-center border border-border transition-colors hover:bg-gold hover:text-primary-foreground"><Instagram className="h-5 w-5" /></a><a href={facebook} target="_blank" rel="noreferrer" aria-label="Facebook da Adão Terraplenagem" className="flex h-11 w-11 items-center justify-center border border-border transition-colors hover:bg-gold hover:text-primary-foreground"><Facebook className="h-5 w-5" /></a></div><span className="mt-3 block text-sm text-muted-foreground">@adaoterraplenagem</span></div>
         </div>
         <div className="border-t border-border"><div className="mx-auto flex max-w-7xl flex-col gap-2 px-5 py-6 text-xs text-muted-foreground sm:flex-row sm:justify-between lg:px-8"><span>© 2026 Adão Terraplenagem. Todos os direitos reservados.</span><span>Araçoiaba da Serra • São Paulo</span></div></div>
       </footer>
