@@ -26,9 +26,13 @@ import {
   Trash2,
   Truck,
 } from "lucide-react";
-import heroImage from "@/assets/adao-hero.jpg";
 import fleetImage from "@/assets/adao-frota.jpg";
 import logoAsset from "@/assets/adao-terraplenagem-logo.png.asset.json";
+import foundationAsset from "@/assets/abertura-fundacao.webp.asset.json";
+import demolitionAsset from "@/assets/demolicao.webp.asset.json";
+import excavationAsset from "@/assets/escavacao-piscina.webp.asset.json";
+import levelingAsset from "@/assets/nivelamento-jcb.webp.asset.json";
+import preparationAsset from "@/assets/preparacao-terreno.webp.asset.json";
 
 export const Route = createFileRoute("/")({
   component: Index,
@@ -44,7 +48,7 @@ export const Route = createFileRoute("/")({
     ],
     links: [
       { rel: "canonical", href: "/" },
-      { rel: "preload", as: "image", href: heroImage, fetchPriority: "high" },
+      { rel: "preload", as: "image", href: excavationAsset.url, fetchPriority: "high" },
     ],
     scripts: [{
       type: "application/ld+json",
@@ -95,6 +99,44 @@ const equipment = [
   { icon: Drill, name: "Perfuratriz", use: "Perfuração de solo com precisão e rendimento" },
 ];
 
+const gallery = [
+  {
+    image: excavationAsset.url,
+    title: "Escavação para piscina",
+    alt: "Escavação para piscina com máquinas de terraplenagem em Sorocaba e região",
+    width: 1200,
+    height: 900,
+  },
+  {
+    image: demolitionAsset.url,
+    title: "Demolição",
+    alt: "Demolição de imóvel com escavadeira hidráulica em Sorocaba e região",
+    width: 1200,
+    height: 900,
+  },
+  {
+    image: preparationAsset.url,
+    title: "Preparação de terreno",
+    alt: "Terraplenagem e preparação de terreno para construção na região de Sorocaba",
+    width: 797,
+    height: 417,
+  },
+  {
+    image: foundationAsset.url,
+    title: "Abertura de fundação",
+    alt: "Abertura de fundação e alicerce com terraplenagem em Sorocaba e região",
+    width: 718,
+    height: 538,
+  },
+  {
+    image: levelingAsset.url,
+    title: "Nivelamento de terreno",
+    alt: "Nivelamento de terreno com retroescavadeira JCB na região de Sorocaba",
+    width: 725,
+    height: 379,
+  },
+];
+
 const cities = ["Sorocaba", "Araçoiaba da Serra", "Votorantim", "Tatuí", "Cerquilho", "Alumínio", "Piedade", "Iperó", "Salto de Pirapora", "Capela do Alto"];
 
 function Brand({ compact = false }: { compact?: boolean }) {
@@ -137,7 +179,7 @@ function Index() {
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 lg:h-24 lg:px-8">
           <Brand compact />
           <nav className="hidden items-center gap-7 lg:flex" aria-label="Navegação principal">
-            {([['Sobre', '#sobre'], ['Serviços', '#servicos'], ['Equipamentos', '#equipamentos'], ['Atendimento', '#atendimento'], ['Região', '#regiao'], ['Contato', '#contato']] as const).map(([label, href]) => (
+            {([['Sobre', '#sobre'], ['Serviços', '#servicos'], ['Equipamentos', '#equipamentos'], ['Galeria', '#galeria'], ['Atendimento', '#atendimento'], ['Região', '#regiao'], ['Contato', '#contato']] as const).map(([label, href]) => (
               <a key={href} href={href} className="font-display text-sm font-bold tracking-[0.06em] text-foreground/80 transition-colors hover:text-gold">{label.toUpperCase()}</a>
             ))}
           </nav>
@@ -147,7 +189,7 @@ function Index() {
       </header>
 
       <section id="inicio" className="relative flex min-h-[760px] items-end overflow-hidden pt-28 lg:min-h-[820px]">
-        <img src={heroImage} alt="Escavadeira hidráulica executando terraplenagem em Sorocaba" width={1920} height={1200} fetchPriority="high" className="absolute inset-0 h-full w-full object-cover object-[62%_center]" />
+        <img src={excavationAsset.url} alt="Escavação para piscina com máquinas de terraplenagem em Sorocaba e região" width={1200} height={900} fetchPriority="high" className="absolute inset-0 h-full w-full object-cover object-center" />
         <div className="absolute inset-0 bg-navy-deep/55" />
         <div className="absolute inset-0 bg-gradient-to-r from-navy-deep via-navy-deep/80 to-transparent" />
         <div className="relative mx-auto w-full max-w-7xl px-5 pb-16 lg:px-8 lg:pb-20">
@@ -217,6 +259,31 @@ function Index() {
               <p className="font-display text-2xl font-black uppercase leading-tight">Qual máquina seu projeto precisa?</p>
               <a href={whatsapp} target="_blank" rel="noreferrer" className="mt-4 inline-flex items-center gap-2 font-display text-sm font-bold">FALE COM A EQUIPE <ChevronRight className="h-4 w-4" /></a>
             </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="galeria" className="bg-foreground py-20 text-primary-foreground lg:py-28">
+        <div className="mx-auto max-w-7xl px-5 lg:px-8">
+          <SectionHeading eyebrow="GALERIA DE OBRAS" title="OBRAS QUE JÁ TRANSFORMAMOS" light />
+          <p className="-mt-5 mb-10 max-w-2xl text-lg leading-relaxed text-primary-foreground/70">Alguns dos projetos que já executamos em Sorocaba e região.</p>
+          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 lg:gap-4">
+            {gallery.map(({ image, title, alt, width, height }) => (
+              <figure key={title} className="group min-w-0 overflow-hidden bg-navy-deep">
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img
+                    src={image}
+                    alt={alt}
+                    width={width}
+                    height={height}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover transition-transform duration-300 motion-safe:lg:group-hover:scale-[1.04]"
+                  />
+                </div>
+                <figcaption className="border-t-2 border-gold px-3 py-4 font-display text-sm font-extrabold uppercase leading-tight sm:text-base">{title}</figcaption>
+              </figure>
+            ))}
           </div>
         </div>
       </section>
