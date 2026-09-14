@@ -97,8 +97,8 @@ export const Route = createFileRoute("/")({
         })),
         aggregateRating: {
           "@type": "AggregateRating",
-          ratingValue: "5.0",
-          reviewCount: reviews.length,
+          ratingValue: GOOGLE_RATING,
+          reviewCount: GOOGLE_REVIEW_COUNT,
         },
         review: reviews.map((r) => ({
           "@type": "Review",
@@ -127,6 +127,9 @@ const whatsapp = "https://wa.me/5515997858631";
 const mapUrl = "https://www.google.com/maps/search/?api=1&query=Estr.+Irmã+Theoberta,+101,+Jd+Arco+Verde,+Araçoiaba+da+Serra+-+SP,+18191-494";
 const instagram = "https://www.instagram.com/adaoterraplenagem/";
 const facebook = "https://www.facebook.com/p/Adão-Terraplenagem-100031402016949/";
+const googleReviewsUrl = "https://www.google.com/search?q=Ad%C3%A3o+Terraplenagem+Ara%C3%A7oiaba+da+Serra";
+const GOOGLE_RATING = "5.0";
+const GOOGLE_REVIEW_COUNT = 58;
 
 const services = [
   { icon: Sparkles, title: "Limpeza e preparação", text: "Terrenos prontos para o início seguro da sua obra." },
@@ -495,9 +498,12 @@ function Index() {
         <div className="mx-auto max-w-7xl px-5 lg:px-8">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading eyebrow="QUEM JÁ CONTRATOU" title="AVALIAÇÕES DE CLIENTES" light />
-            <div className="mb-10 flex items-center gap-2 text-primary-foreground">
-              <div className="flex gap-0.5">{Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-5 w-5 fill-gold text-gold" />)}</div>
-              <span className="font-display text-sm font-bold">5.0 no Google · {reviews.length} avaliações</span>
+            <div className="mb-10 flex flex-col items-start gap-2 text-primary-foreground sm:items-end">
+              <div className="flex items-center gap-2">
+                <div className="flex gap-0.5">{Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-5 w-5 fill-gold text-gold" />)}</div>
+                <span className="font-display text-sm font-bold">{GOOGLE_RATING} no Google · {GOOGLE_REVIEW_COUNT} avaliações</span>
+              </div>
+              <a href={googleReviewsUrl} target="_blank" rel="noreferrer" className="text-sm font-bold text-gold underline-offset-4 hover:underline">Ver todas as avaliações no Google →</a>
             </div>
           </div>
         </div>
