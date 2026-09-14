@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   ArrowRight,
@@ -28,6 +28,7 @@ import {
   Tractor,
   Trash2,
   Truck,
+  X,
 } from "lucide-react";
 import fleetImage from "@/assets/abertura-fundacao.webp";
 import heroImageUrl from "@/assets/escavacao-piscina-hero.webp";
@@ -196,6 +197,8 @@ const gallery = [
 
 const cities = ["Sorocaba", "Araçoiaba da Serra", "Votorantim", "Tatuí", "Cerquilho", "Alumínio", "Piedade", "Iperó", "Salto de Pirapora", "Capela do Alto"];
 
+const NAV_ITEMS = [['Sobre', '#sobre'], ['Serviços', '#servicos'], ['Equipamentos', '#equipamentos'], ['Galeria', '#galeria'], ['Atendimento', '#atendimento'], ['Avaliações', '#depoimentos'], ['Região', '#regiao'], ['Contato', '#contato']] as const;
+
 const avatarColors = ["bg-teal-700", "bg-amber-700", "bg-rose-700", "bg-indigo-600", "bg-pink-600", "bg-emerald-700", "bg-purple-600", "bg-sky-700"];
 
 const reviews = [
@@ -303,19 +306,56 @@ function SectionHeading({ eyebrow, title, light = false }: { eyebrow: string; ti
 }
 
 function Index() {
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   return (
     <main className="min-h-screen bg-background text-foreground">
       <header className="absolute inset-x-0 top-0 z-30 border-b border-foreground/10">
         <div className="mx-auto flex h-20 max-w-7xl items-center justify-between px-5 lg:h-24 lg:px-8">
           <Brand compact />
           <nav className="hidden items-center gap-7 lg:flex" aria-label="Navegação principal">
-            {([['Sobre', '#sobre'], ['Serviços', '#servicos'], ['Equipamentos', '#equipamentos'], ['Galeria', '#galeria'], ['Atendimento', '#atendimento'], ['Região', '#regiao'], ['Contato', '#contato']] as const).map(([label, href]) => (
+            {NAV_ITEMS.map(([label, href]) => (
               <a key={href} href={href} className="font-display text-sm font-bold tracking-[0.06em] text-foreground/80 transition-colors hover:text-gold">{label.toUpperCase()}</a>
             ))}
           </nav>
           <a href={whatsapp} target="_blank" rel="noreferrer" onClick={() => trackEvent("whatsapp_click", { location: "header" })} className="hidden min-h-11 items-center gap-2 rounded-sm bg-gold px-5 font-display text-sm font-extrabold text-primary-foreground transition-colors hover:bg-gold-soft sm:flex"><MessageCircle className="h-4 w-4" /> FALE CONOSCO</a>
-          <a href="#servicos" className="flex h-11 w-11 items-center justify-center border border-foreground/20 text-foreground lg:hidden" aria-label="Ver serviços"><Menu className="h-5 w-5" /></a>
+          <button
+            type="button"
+            onClick={() => setMobileMenuOpen((open) => !open)}
+            aria-label={mobileMenuOpen ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={mobileMenuOpen}
+            className="flex h-11 w-11 items-center justify-center border border-foreground/20 text-foreground lg:hidden"
+          >
+            {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
         </div>
+        {mobileMenuOpen && (
+          <nav aria-label="Navegação mobile" className="border-t border-foreground/10 bg-background lg:hidden">
+            <div className="flex flex-col px-5 py-4">
+              {NAV_ITEMS.map(([label, href]) => (
+                <a
+                  key={href}
+                  href={href}
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="border-b border-foreground/10 py-3.5 font-display text-base font-bold tracking-[0.04em] text-foreground/85 last:border-b-0"
+                >
+                  {label.toUpperCase()}
+                </a>
+              ))}
+              <a
+                href={whatsapp}
+                target="_blank"
+                rel="noreferrer"
+                onClick={() => {
+                  trackEvent("whatsapp_click", { location: "mobile_menu" });
+                  setMobileMenuOpen(false);
+                }}
+                className="mt-4 flex min-h-12 items-center justify-center gap-2 rounded-sm bg-gold px-5 font-display text-sm font-extrabold text-primary-foreground"
+              >
+                <MessageCircle className="h-4 w-4" /> FALE CONOSCO
+              </a>
+            </div>
+          </nav>
+        )}
       </header>
 
       <section id="inicio" className="relative flex min-h-[760px] items-end overflow-hidden pt-28 lg:min-h-[820px]">
