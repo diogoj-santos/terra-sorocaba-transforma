@@ -333,25 +333,25 @@ function Index() {
       <section id="galeria" className="bg-foreground py-20 text-primary-foreground lg:py-28">
         <div className="mx-auto max-w-7xl px-5 lg:px-8">
           <SectionHeading eyebrow="GALERIA DE OBRAS" title="OBRAS QUE JÁ TRANSFORMAMOS" light />
-          <p className="-mt-5 mb-10 max-w-2xl text-lg leading-relaxed text-primary-foreground/70">Alguns dos projetos que já executamos em Sorocaba e região.</p>
-          <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5 lg:gap-4">
-            {gallery.map(({ image, title, alt, width, height }) => (
-              <figure key={title} className="group min-w-0 overflow-hidden bg-navy-deep">
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src={image}
-                    alt={alt}
-                    width={width}
-                    height={height}
-                    loading="lazy"
-                    decoding="async"
-                    className="h-full w-full object-cover transition-transform duration-300 motion-safe:lg:group-hover:scale-[1.04]"
-                  />
-                </div>
-                <figcaption className="border-t-2 border-gold px-3 py-4 font-display text-sm font-extrabold uppercase leading-tight text-foreground sm:text-base">{title}</figcaption>
-              </figure>
-            ))}
-          </div>
+          <p className="-mt-5 mb-10 max-w-2xl text-lg leading-relaxed text-primary-foreground/70">Alguns dos projetos que já executamos em Sorocaba e região. Arraste para o lado para ver mais.</p>
+        </div>
+        <div className="scrollbar-none flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-4 lg:gap-4 lg:px-8" style={{ scrollbarWidth: "none" }}>
+          {gallery.map(({ image, title, alt, width, height }) => (
+            <figure key={title} className="group w-[68vw] shrink-0 snap-start overflow-hidden bg-navy-deep sm:w-64 lg:w-72">
+              <div className="aspect-[4/3] overflow-hidden">
+                <img
+                  src={image}
+                  alt={alt}
+                  width={width}
+                  height={height}
+                  loading="lazy"
+                  decoding="async"
+                  className="h-full w-full object-cover transition-transform duration-300 motion-safe:lg:group-hover:scale-[1.04]"
+                />
+              </div>
+              <figcaption className="border-t-2 border-gold px-3 py-4 font-display text-sm font-extrabold uppercase leading-tight text-foreground sm:text-base">{title}</figcaption>
+            </figure>
+          ))}
         </div>
       </section>
 
