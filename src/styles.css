@@ -65,6 +65,8 @@
   --color-gold-soft: var(--gold-soft);
   --color-navy-deep: var(--navy-deep);
   --color-surface-raised: var(--surface-raised);
+  --color-whatsapp: var(--whatsapp);
+  --color-whatsapp-foreground: var(--whatsapp-foreground);
 }
 
 :root {
@@ -92,6 +94,8 @@
   --gold-soft: oklch(0.84 0.09 84);
   --navy-deep: oklch(0.16 0.055 258);
   --surface-raised: oklch(0.285 0.065 257);
+  --whatsapp: oklch(0.68 0.18 150);
+  --whatsapp-foreground: oklch(1 0 0);
   --chart-1: oklch(0.646 0.222 41.116);
   --chart-2: oklch(0.6 0.118 184.704);
   --chart-3: oklch(0.398 0.07 227.392);
@@ -162,4 +166,17 @@
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+}
+
+@keyframes whatsapp-highlight {
+  0%, 100% { box-shadow: 0 12px 28px color-mix(in oklab, var(--whatsapp) 34%, transparent); }
+  50% { box-shadow: 0 12px 34px color-mix(in oklab, var(--whatsapp) 55%, transparent); }
+}
+
+.whatsapp-float {
+  animation: whatsapp-highlight 2.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .whatsapp-float { animation: none; }
 }

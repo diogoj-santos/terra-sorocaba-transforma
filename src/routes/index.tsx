@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   ArrowRight,
@@ -20,6 +20,7 @@ import {
   Mountain,
   MoveDown,
   Pickaxe,
+  Quote,
   Ruler,
   ShieldCheck,
   Shovel,
@@ -202,8 +203,6 @@ const cities = ["Sorocaba", "Araçoiaba da Serra", "Votorantim", "Tatuí", "Cerq
 
 const NAV_ITEMS = [['Sobre', '#sobre'], ['Serviços', '#servicos'], ['Equipamentos', '#equipamentos'], ['Galeria', '#galeria'], ['Atendimento', '#atendimento'], ['Avaliações', '#depoimentos'], ['Região', '#regiao'], ['Contato', '#contato']] as const;
 
-const avatarColors = ["bg-teal-700", "bg-amber-700", "bg-rose-700", "bg-indigo-600", "bg-pink-600", "bg-emerald-700", "bg-purple-600", "bg-sky-700"];
-
 const reviews = [
   { name: "Marinho Marte", text: "Profissionais competentes e atenciosos. Super recomendo, preço justo. Logo vou contratá-lo novamente." },
   { name: "Daf Jay", text: "Adão é um excelente parceiro de obras, já construí algumas casas com ele fazendo as terraplenagens pra mim com um trabalho de excelente qualidade, preço justo e pontualidade." },
@@ -225,12 +224,32 @@ const faq = [
     a: "Atendemos Sorocaba, Araçoiaba da Serra, Votorantim, Tatuí, Cerquilho, Alumínio, Piedade, Iperó, Salto de Pirapora, Capela do Alto e região. Consulte nossa equipe pelo WhatsApp para confirmar o atendimento em sua localização.",
   },
   {
-    q: "Quanto custa um serviço de terraplenagem?",
-    a: "O valor depende do tipo de terreno, do acesso para as máquinas, do desnível e da quantidade de terra a movimentar. Por isso fazemos uma avaliação presencial gratuita antes de enviar um orçamento personalizado.",
+    q: "Quanto custa terraplenagem ou máquina por hora em Sorocaba?",
+    a: "O preço da terraplenagem e da hora-máquina varia conforme o equipamento necessário, o acesso ao local, o tipo de solo, o volume de terra e o tempo estimado de execução. Fazemos uma avaliação presencial gratuita em Sorocaba, Araçoiaba da Serra, Votorantim e região para indicar a solução adequada e apresentar um orçamento claro, sem compromisso.",
   },
   {
     q: "Quais serviços de terraplenagem vocês fazem?",
-    a: "Limpeza e preparação de terrenos, escavações, nivelamento, abertura de valas, perfurações, execução de aterros, demolições, movimentação de terra e remoção de entulho.",
+    a: "Executamos limpeza e preparação de terrenos, escavação de piscina e fundação, nivelamento de terreno, abertura de valas, perfurações, aterros, demolições, movimentação de terra e remoção de entulho. Avaliamos cada obra para definir a máquina e o método mais seguros.",
+  },
+  {
+    q: "Vocês fazem escavação de piscina em Sorocaba e região?",
+    a: "Sim. Fazemos escavação de piscina em Sorocaba, Araçoiaba da Serra, Votorantim e cidades próximas. Antes do serviço, avaliamos medidas, profundidade, acesso das máquinas, tipo de solo e local para retirada ou reaproveitamento da terra.",
+  },
+  {
+    q: "Como funciona o nivelamento de terreno para construção?",
+    a: "O nivelamento corrige desníveis e prepara a área para fundações, pisos, jardins ou outras etapas da obra. A equipe analisa as cotas, realiza cortes e aterros quando necessários e utiliza o equipamento adequado para deixar o terreno conforme o projeto.",
+  },
+  {
+    q: "A Adão faz limpeza de lote e retirada de entulho?",
+    a: "Sim. Realizamos limpeza de lote, preparação de terreno, movimentação de terra e remoção de entulho em Sorocaba e região. A visita técnica identifica vegetação, resíduos, acessos e o volume a retirar para que o orçamento seja preciso.",
+  },
+  {
+    q: "Quando é necessário fazer aterro no terreno?",
+    a: "O aterro é indicado para elevar cotas, corrigir desníveis ou preparar a base de uma construção. O serviço deve considerar o material adequado, a distribuição em camadas e as condições do solo. Após avaliar o local, orientamos a execução mais apropriada para a obra.",
+  },
+  {
+    q: "É possível contratar retroescavadeira ou escavadeira por hora?",
+    a: "Sim. Conforme o tipo e a duração do serviço, podemos elaborar orçamento por hora-máquina ou pelo projeto completo. Temos retroescavadeira, mini escavadeira, escavadeira hidráulica, mini carregadeira, caminhão caçamba, rompedor e perfuratriz.",
   },
   {
     q: "Como faço para pedir um orçamento?",
@@ -270,6 +289,14 @@ function ScrollRow({ children, edgeClass = "px-5 lg:px-8" }: { children: React.R
     if (!el) return;
     el.scrollBy({ left: direction * el.clientWidth * 0.82, behavior: "smooth" });
   };
+
+function WhatsAppMark({ className = "h-8 w-8" }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 32 32" aria-hidden="true" className={className} fill="currentColor">
+      <path d="M16.04 3A12.82 12.82 0 0 0 5.16 22.62L3.3 29l6.55-1.72A12.9 12.9 0 1 0 16.04 3Zm0 23.52a10.58 10.58 0 0 1-5.4-1.48l-.39-.23-3.88 1.02 1.04-3.78-.25-.4a10.62 10.62 0 1 1 8.88 4.87Zm5.82-7.96c-.32-.16-1.88-.93-2.17-1.04-.29-.11-.5-.16-.71.16-.21.32-.82 1.04-1 1.25-.18.21-.37.24-.69.08-.32-.16-1.34-.49-2.55-1.57a9.55 9.55 0 0 1-1.76-2.19c-.18-.32-.02-.49.14-.65.14-.14.32-.37.48-.56.16-.18.21-.32.32-.53.11-.21.05-.4-.03-.56-.08-.16-.71-1.72-.98-2.35-.26-.62-.52-.54-.71-.55h-.61c-.21 0-.56.08-.85.4-.29.32-1.11 1.09-1.11 2.65s1.14 3.07 1.3 3.28c.16.21 2.24 3.42 5.42 4.79.76.33 1.35.52 1.81.67.76.24 1.45.21 2 .13.61-.09 1.88-.77 2.14-1.51.26-.74.26-1.38.18-1.51-.08-.13-.29-.21-.61-.37Z" />
+    </svg>
+  );
+}
   return (
     <div className="relative">
       <div
@@ -310,6 +337,19 @@ function SectionHeading({ eyebrow, title, light = false }: { eyebrow: string; ti
 
 function Index() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  useEffect(() => {
+    if (!mobileMenuOpen) return;
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMobileMenuOpen(false);
+    };
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [mobileMenuOpen]);
+
   return (
     <main className="min-h-screen bg-background text-foreground">
       <header className="absolute inset-x-0 top-0 z-30 border-b border-foreground/10">
@@ -326,22 +366,32 @@ function Index() {
             onClick={() => setMobileMenuOpen((open) => !open)}
             aria-label={mobileMenuOpen ? "Fechar menu" : "Abrir menu"}
             aria-expanded={mobileMenuOpen}
-            className="flex h-11 w-11 items-center justify-center border border-foreground/20 text-foreground lg:hidden"
+             aria-controls="mobile-nav"
+             className="relative z-50 flex h-12 w-12 items-center justify-center rounded-sm border border-foreground/25 bg-navy-deep/80 text-foreground transition-colors hover:border-gold hover:text-gold lg:hidden"
           >
             {mobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
           </button>
         </div>
-        {mobileMenuOpen && (
-          <nav aria-label="Navegação mobile" className="border-t border-foreground/10 bg-background lg:hidden">
-            <div className="flex flex-col px-5 py-4">
+        <button
+          type="button"
+          aria-label="Fechar menu"
+          tabIndex={mobileMenuOpen ? 0 : -1}
+          onClick={() => setMobileMenuOpen(false)}
+          className={`fixed inset-0 z-30 bg-navy-deep/75 transition-opacity duration-200 lg:hidden ${mobileMenuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"}`}
+        />
+        <nav id="mobile-nav" aria-label="Navegação mobile" aria-hidden={!mobileMenuOpen} className={`fixed inset-y-0 right-0 z-40 w-[min(88vw,24rem)] border-l border-border bg-background shadow-2xl transition-transform duration-300 ease-out lg:hidden ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}>
+            <div className="flex h-full flex-col px-6 pb-7 pt-24">
+              <span className="mb-3 font-display text-xs font-bold tracking-[0.16em] text-gold">NAVEGAÇÃO</span>
               {NAV_ITEMS.map(([label, href]) => (
                 <a
                   key={href}
                   href={href}
                   onClick={() => setMobileMenuOpen(false)}
-                  className="border-b border-foreground/10 py-3.5 font-display text-base font-bold tracking-[0.04em] text-foreground/85 last:border-b-0"
+                  tabIndex={mobileMenuOpen ? 0 : -1}
+                  className="flex min-h-13 items-center justify-between border-b border-foreground/10 font-display text-lg font-bold text-foreground/90 transition-colors hover:text-gold"
                 >
                   {label.toUpperCase()}
+                  <ChevronRight className="h-4 w-4 text-gold" />
                 </a>
               ))}
               <a
@@ -352,13 +402,13 @@ function Index() {
                   trackEvent("whatsapp_click", { location: "mobile_menu" });
                   setMobileMenuOpen(false);
                 }}
-                className="mt-4 flex min-h-12 items-center justify-center gap-2 rounded-sm bg-gold px-5 font-display text-sm font-extrabold text-primary-foreground"
+                 tabIndex={mobileMenuOpen ? 0 : -1}
+                 className="mt-auto flex min-h-14 items-center justify-center gap-3 rounded-sm bg-gold px-5 font-display text-base font-extrabold text-primary-foreground transition-colors hover:bg-gold-soft"
               >
                 <MessageCircle className="h-4 w-4" /> FALE CONOSCO
               </a>
             </div>
           </nav>
-        )}
       </header>
 
       <section id="inicio" className="relative flex min-h-[760px] items-end overflow-hidden pt-28 lg:min-h-[820px]">
@@ -441,24 +491,27 @@ function Index() {
           <SectionHeading eyebrow="GALERIA DE OBRAS" title="OBRAS QUE JÁ TRANSFORMAMOS" light />
           <p className="-mt-5 mb-10 max-w-2xl text-lg leading-relaxed text-primary-foreground/70">Alguns dos projetos que já executamos em Sorocaba e região.</p>
         </div>
-        <ScrollRow>
-          {gallery.map(({ image, title, alt, width, height }) => (
-            <figure key={title} className="group w-[68vw] shrink-0 snap-start overflow-hidden rounded-lg bg-navy-deep sm:w-64 lg:w-72">
-              <div className="aspect-[4/3] overflow-hidden">
-                <img
-                  src={image}
-                  alt={alt}
-                  width={width}
-                  height={height}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-full w-full object-cover transition-transform duration-300 motion-safe:lg:group-hover:scale-[1.04]"
-                />
-              </div>
-              <figcaption className="border-t-2 border-gold px-3 py-4 font-display text-sm font-extrabold uppercase leading-tight text-foreground sm:text-base">{title}</figcaption>
-            </figure>
-          ))}
-        </ScrollRow>
+        <div className="mx-auto max-w-7xl px-5 lg:px-8">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-12">
+            {gallery.map(({ image, title, alt, width, height }, index) => (
+              <figure key={title} className={`group relative min-h-48 overflow-hidden rounded-lg bg-navy-deep shadow-lg ${index < 2 ? "col-span-2 aspect-[4/3] sm:aspect-[16/9] lg:col-span-6" : "aspect-[4/5] lg:col-span-3"}`}>
+                <div className="absolute inset-0 overflow-hidden">
+                  <img
+                    src={image}
+                    alt={alt}
+                    width={width}
+                    height={height}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.035]"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/10 to-transparent" />
+                <figcaption className="absolute inset-x-0 bottom-0 border-l-2 border-gold px-3 py-3 font-display text-sm font-extrabold uppercase leading-tight text-foreground sm:px-5 sm:py-5 sm:text-lg">{title}</figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
       </section>
 
       <section id="atendimento" className="bg-gold py-20 text-primary-foreground lg:py-28">
@@ -498,27 +551,33 @@ function Index() {
         <div className="mx-auto max-w-7xl px-5 lg:px-8">
           <div className="flex flex-wrap items-end justify-between gap-6">
             <SectionHeading eyebrow="QUEM JÁ CONTRATOU" title="AVALIAÇÕES DE CLIENTES" light />
-            <div className="mb-10 flex flex-col items-start gap-2 text-primary-foreground sm:items-end">
+            <div className="mb-10 rounded-lg border border-gold/35 bg-card px-5 py-4 text-primary-foreground sm:text-right">
               <div className="flex items-center gap-2">
                 <div className="flex gap-0.5">{Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-5 w-5 fill-gold text-gold" />)}</div>
-                <span className="font-display text-sm font-bold">{GOOGLE_RATING} no Google · {GOOGLE_REVIEW_COUNT} avaliações</span>
+                <span className="font-display text-sm font-bold">{GOOGLE_RATING} no Google</span>
               </div>
-              <a href={googleReviewsUrl} target="_blank" rel="noreferrer" className="text-sm font-bold text-gold underline-offset-4 hover:underline">Ver todas as avaliações no Google →</a>
+              <div className="mt-1 text-xs text-muted-foreground">Baseado em {GOOGLE_REVIEW_COUNT} avaliações</div>
+              <a href={googleReviewsUrl} target="_blank" rel="noreferrer" className="mt-2 inline-block text-sm font-bold text-gold underline-offset-4 hover:underline">Ver avaliações no Google →</a>
             </div>
           </div>
         </div>
         <ScrollRow>
-          {reviews.map((review, i) => (
-            <figure key={review.name} className="flex w-[78vw] shrink-0 snap-start flex-col justify-between rounded-lg border border-primary-foreground/15 bg-card p-6 sm:w-80">
+          {reviews.map((review) => (
+            <figure key={review.name} className="flex w-[84vw] shrink-0 snap-start flex-col justify-between rounded-lg border border-primary-foreground/15 bg-card p-6 shadow-lg transition-colors hover:border-gold/45 sm:w-88">
               <div>
-                <div className="flex items-center gap-3">
-                  <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full font-display text-lg font-bold text-white ${avatarColors[i % avatarColors.length]}`}>{review.name.charAt(0)}</span>
-                  <div>
-                    <figcaption className="font-display text-sm font-bold uppercase tracking-[0.02em] text-foreground">{review.name}</figcaption>
+                <div className="mb-5 flex items-start justify-between gap-4">
+                  <Quote className="h-8 w-8 text-gold" fill="currentColor" />
+                  <span className="font-display text-sm font-black text-foreground" aria-label="Avaliação publicada no Google">G</span>
+                </div>
+                <blockquote className="min-h-32 leading-relaxed text-foreground/85">“{review.text}”</blockquote>
+                <div className="mt-6 flex min-w-0 items-center gap-3 border-t border-primary-foreground/10 pt-5">
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-secondary font-display text-lg font-bold text-gold">{review.name.charAt(0)}</span>
+                  <div className="min-w-0">
+                    <figcaption className="truncate font-display text-sm font-bold uppercase text-foreground">{review.name}</figcaption>
                     <div className="mt-1 flex gap-0.5">{Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-3.5 w-3.5 fill-gold text-gold" />)}</div>
                   </div>
+                  <span className="ml-auto inline-flex shrink-0 items-center gap-1 text-xs font-semibold text-gold"><BadgeCheck className="h-4 w-4" /> Verificada</span>
                 </div>
-                <blockquote className="mt-4 leading-relaxed text-muted-foreground">"{review.text}"</blockquote>
               </div>
             </figure>
           ))}
@@ -585,7 +644,7 @@ function Index() {
         <div className="border-t border-border"><div className="mx-auto flex max-w-7xl flex-col gap-2 px-5 py-6 text-xs text-muted-foreground sm:flex-row sm:justify-between lg:px-8"><span>© 2026 Adão Terraplenagem. Todos os direitos reservados.</span><span>Araçoiaba da Serra • São Paulo</span></div></div>
       </footer>
 
-      <a href={whatsapp} target="_blank" rel="noreferrer" onClick={() => trackEvent("whatsapp_click", { location: "floating_button" })} aria-label="Solicitar orçamento pelo WhatsApp" className="fixed bottom-5 right-5 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-gold text-primary-foreground shadow-xl transition-transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-ring/40"><MessageCircle className="h-8 w-8" fill="currentColor" strokeWidth={1.5} /></a>
+      <a href={whatsapp} target="_blank" rel="noreferrer" onClick={() => trackEvent("whatsapp_click", { location: "floating_button" })} aria-label="Solicitar orçamento pelo WhatsApp" className="whatsapp-float fixed bottom-5 right-5 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-whatsapp text-whatsapp-foreground shadow-xl transition-transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-whatsapp/35"><WhatsAppMark /></a>
     </main>
   );
 }
