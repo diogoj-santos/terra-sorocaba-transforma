@@ -35,6 +35,7 @@ import excavationAssetUrl from "@/assets/escavacao-piscina.webp";
 import levelingAssetUrl from "@/assets/nivelamento-jcb.webp";
 import preparationAssetUrl from "@/assets/preparacao-terreno.webp";
 import craneAssetUrl from "@/assets/transplante-palmeira.webp";
+import { trackEvent } from "@/lib/analytics";
 
 const logoAsset = { url: logoAssetUrl };
 const foundationAsset = { url: foundationAssetUrl };
@@ -219,9 +220,9 @@ function Brand({ compact = false }: { compact?: boolean }) {
   );
 }
 
-function WhatsAppButton({ label = "SOLICITAR ORÇAMENTO GRÁTIS", dark = false }: { label?: string; dark?: boolean }) {
+function WhatsAppButton({ label = "SOLICITAR ORÇAMENTO GRÁTIS", dark = false, location = "unknown" }: { label?: string; dark?: boolean; location?: string }) {
   return (
-    <a href={whatsapp} target="_blank" rel="noreferrer" className={`group inline-flex min-h-14 items-center justify-center gap-3 rounded-sm px-6 font-display text-base font-extrabold tracking-[0.04em] transition-colors ${dark ? "bg-navy-deep text-foreground hover:bg-background" : "bg-gold text-primary-foreground hover:bg-gold-soft"}`}>
+    <a href={whatsapp} target="_blank" rel="noreferrer" onClick={() => trackEvent("whatsapp_click", { location })} className={`group inline-flex min-h-14 items-center justify-center gap-3 rounded-sm px-6 font-display text-base font-extrabold tracking-[0.04em] transition-colors ${dark ? "bg-navy-deep text-foreground hover:bg-background" : "bg-gold text-primary-foreground hover:bg-gold-soft"}`}>
       <MessageCircle className="h-5 w-5" />
       {label}
       <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
@@ -249,7 +250,7 @@ function Index() {
               <a key={href} href={href} className="font-display text-sm font-bold tracking-[0.06em] text-foreground/80 transition-colors hover:text-gold">{label.toUpperCase()}</a>
             ))}
           </nav>
-          <a href={whatsapp} target="_blank" rel="noreferrer" className="hidden min-h-11 items-center gap-2 rounded-sm bg-gold px-5 font-display text-sm font-extrabold text-primary-foreground transition-colors hover:bg-gold-soft sm:flex"><MessageCircle className="h-4 w-4" /> FALE CONOSCO</a>
+          <a href={whatsapp} target="_blank" rel="noreferrer" onClick={() => trackEvent("whatsapp_click", { location: "header" })} className="hidden min-h-11 items-center gap-2 rounded-sm bg-gold px-5 font-display text-sm font-extrabold text-primary-foreground transition-colors hover:bg-gold-soft sm:flex"><MessageCircle className="h-4 w-4" /> FALE CONOSCO</a>
           <a href="#servicos" className="flex h-11 w-11 items-center justify-center border border-foreground/20 text-foreground lg:hidden" aria-label="Ver serviços"><Menu className="h-5 w-5" /></a>
         </div>
       </header>
@@ -264,12 +265,12 @@ function Index() {
             <h1 className="font-display text-5xl font-black uppercase leading-[0.91] tracking-normal text-foreground sm:text-7xl lg:text-[5.5rem]">Há 14 anos<br /><span className="text-gold">transformando terrenos</span> em Sorocaba e região</h1>
             <p className="mt-7 max-w-2xl text-base leading-relaxed text-foreground/80 sm:text-xl">Soluções completas para residências, condomínios, empresas, construtoras e propriedades rurais — com máquinas próprias e equipe experiente.</p>
             <div className="mt-9 flex flex-col items-start gap-5 sm:flex-row sm:items-center">
-              <WhatsAppButton />
+              <WhatsAppButton location="hero" />
               <div className="flex items-center gap-3 text-sm text-foreground/75"><ShieldCheck className="h-9 w-9 text-gold" /><span><strong className="block text-foreground">Avaliação presencial</strong>Sem custo e sem compromisso</span></div>
             </div>
           </div>
           <div className="mt-12 grid max-w-2xl grid-cols-3 border-t border-foreground/20 pt-6">
-            {[['14+', 'ANOS DE EXPERIÊNCIA'], ['100%', 'COMPROMISSO'], ['10', 'CIDADES ATENDIDAS']].map(([number, label]) => <div key={label}><strong className="font-display text-3xl text-gold sm:text-4xl">{number}</strong><span className="mt-1 block max-w-24 font-display text-[0.65rem] font-bold leading-tight text-foreground/70 sm:text-xs">{label}</span></div>)}
+            {[['14+', 'ANOS DE EXPERIÊNCIA'], ['7', 'EQUIPAMENTOS PRÓPRIOS'], ['10', 'CIDADES ATENDIDAS']].map(([number, label]) => <div key={label}><strong className="font-display text-3xl text-gold sm:text-4xl">{number}</strong><span className="mt-1 block max-w-24 font-display text-[0.65rem] font-bold leading-tight text-foreground/70 sm:text-xs">{label}</span></div>)}
           </div>
         </div>
       </section>
@@ -323,7 +324,7 @@ function Index() {
             <div className="flex min-h-48 flex-col justify-between bg-gold p-6 text-primary-foreground sm:col-span-2 lg:col-span-1">
               <CircleDot className="h-8 w-8" />
               <p className="font-display text-2xl font-black uppercase leading-tight">Qual máquina seu projeto precisa?</p>
-              <a href={whatsapp} target="_blank" rel="noreferrer" className="mt-4 inline-flex items-center gap-2 font-display text-sm font-bold">FALE COM A EQUIPE <ChevronRight className="h-4 w-4" /></a>
+              <a href={whatsapp} target="_blank" rel="noreferrer" onClick={() => trackEvent("whatsapp_click", { location: "equipamentos" })} className="mt-4 inline-flex items-center gap-2 font-display text-sm font-bold">FALE COM A EQUIPE <ChevronRight className="h-4 w-4" /></a>
             </div>
           </div>
         </div>
@@ -361,7 +362,7 @@ function Index() {
               <div className="mb-4 flex items-center gap-3 font-display text-sm font-bold tracking-[0.16em]"><span className="h-px w-9 bg-primary-foreground" />COMO FUNCIONA</div>
               <h2 className="font-display text-5xl font-black uppercase leading-[0.92] sm:text-6xl">DO PRIMEIRO CONTATO AO TERRENO PRONTO.</h2>
               <div className="mt-8 border-l-4 border-primary-foreground bg-primary-foreground/10 p-5"><strong className="font-display text-xl font-black">ORÇAMENTO GRATUITO</strong><span className="mt-1 block font-display text-sm font-bold">AVALIAÇÃO PRESENCIAL GRATUITA</span></div>
-              <div className="mt-7"><WhatsAppButton label="AGENDAR MINHA AVALIAÇÃO" dark /></div>
+              <div className="mt-7"><WhatsAppButton label="AGENDAR MINHA AVALIAÇÃO" dark location="atendimento" /></div>
             </div>
             <ol className="grid gap-px bg-primary-foreground/25 sm:grid-cols-2">
               {[
@@ -407,7 +408,7 @@ function Index() {
       <section className="border-y border-border bg-surface-raised py-16">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-5 lg:flex-row lg:items-center lg:px-8">
           <div className="max-w-2xl"><span className="font-display text-sm font-bold tracking-[0.15em] text-gold">SEU PROJETO COMEÇA PELO TERRENO</span><h2 className="mt-3 font-display text-4xl font-black uppercase leading-none sm:text-5xl">Vamos conversar sobre a sua obra?</h2></div>
-          <WhatsAppButton />
+          <WhatsAppButton location="cta_final" />
         </div>
       </section>
 
@@ -420,8 +421,8 @@ function Index() {
               <address className="not-italic leading-relaxed text-primary-foreground/75">Estr. Irmã Theoberta, 101 - Jd Arco Verde<br />Araçoiaba da Serra - SP, 18191-494</address>
             </div>
             <div className="mt-7 flex flex-wrap gap-3">
-              <a href={mapUrl} target="_blank" rel="noreferrer" className="inline-flex min-h-12 items-center gap-2 rounded-sm bg-gold px-5 font-display text-sm font-extrabold text-primary-foreground transition-colors hover:bg-gold-soft"><MapPin className="h-5 w-5" />VER NO MAPA</a>
-              <a href={whatsapp} target="_blank" rel="noreferrer" className="inline-flex min-h-12 items-center gap-2 rounded-sm border border-primary-foreground/25 px-5 font-display text-sm font-extrabold transition-colors hover:border-gold hover:text-gold"><MessageCircle className="h-5 w-5" />WHATSAPP</a>
+              <a href={mapUrl} target="_blank" rel="noreferrer" onClick={() => trackEvent("map_click", { location: "contato" })} className="inline-flex min-h-12 items-center gap-2 rounded-sm bg-gold px-5 font-display text-sm font-extrabold text-primary-foreground transition-colors hover:bg-gold-soft"><MapPin className="h-5 w-5" />VER NO MAPA</a>
+              <a href={whatsapp} target="_blank" rel="noreferrer" onClick={() => trackEvent("whatsapp_click", { location: "contato" })} className="inline-flex min-h-12 items-center gap-2 rounded-sm border border-primary-foreground/25 px-5 font-display text-sm font-extrabold transition-colors hover:border-gold hover:text-gold"><MessageCircle className="h-5 w-5" />CHAMAR NO WHATSAPP</a>
             </div>
           </div>
           <div className="overflow-hidden border border-primary-foreground/15 bg-background">
@@ -441,13 +442,13 @@ function Index() {
       <footer className="bg-navy-deep pt-16">
         <div className="mx-auto grid max-w-7xl gap-10 px-5 pb-12 sm:grid-cols-2 lg:grid-cols-4 lg:px-8">
           <div className="sm:col-span-2"><Brand /><p className="mt-6 max-w-sm text-sm leading-relaxed text-muted-foreground">Terraplenagem com responsabilidade, excelência e dedicação em Sorocaba, Araçoiaba da Serra e região.</p></div>
-          <div><h3 className="font-display text-sm font-bold tracking-[0.12em] text-gold">CONTATO</h3><a href={whatsapp} target="_blank" rel="noreferrer" className="mt-5 block font-display text-2xl font-bold hover:text-gold">(15) 99785-8631</a><a href={mapUrl} target="_blank" rel="noreferrer" className="mt-3 flex max-w-xs items-start gap-2 text-sm leading-relaxed text-muted-foreground hover:text-gold"><MapPin className="mt-0.5 h-4 w-4 shrink-0" />Estr. Irmã Theoberta, 101 - Jd Arco Verde, Araçoiaba da Serra - SP</a></div>
-          <div><h3 className="font-display text-sm font-bold tracking-[0.12em] text-gold">ACOMPANHE</h3><div className="mt-5 flex gap-3"><a href={instagram} target="_blank" rel="noreferrer" aria-label="Instagram da Adão Terraplenagem" className="flex h-11 w-11 items-center justify-center border border-border transition-colors hover:bg-gold hover:text-primary-foreground"><Instagram className="h-5 w-5" /></a><a href={facebook} target="_blank" rel="noreferrer" aria-label="Facebook da Adão Terraplenagem" className="flex h-11 w-11 items-center justify-center border border-border transition-colors hover:bg-gold hover:text-primary-foreground"><Facebook className="h-5 w-5" /></a></div><span className="mt-3 block text-sm text-muted-foreground">@adaoterraplenagem</span></div>
+          <div><h3 className="font-display text-sm font-bold tracking-[0.12em] text-gold">CONTATO</h3><a href={whatsapp} target="_blank" rel="noreferrer" onClick={() => trackEvent("whatsapp_click", { location: "footer" })} className="mt-5 block font-display text-2xl font-bold hover:text-gold">(15) 99785-8631</a><a href={mapUrl} target="_blank" rel="noreferrer" onClick={() => trackEvent("map_click", { location: "footer" })} className="mt-3 flex max-w-xs items-start gap-2 text-sm leading-relaxed text-muted-foreground hover:text-gold"><MapPin className="mt-0.5 h-4 w-4 shrink-0" />Estr. Irmã Theoberta, 101 - Jd Arco Verde, Araçoiaba da Serra - SP</a></div>
+          <div><h3 className="font-display text-sm font-bold tracking-[0.12em] text-gold">ACOMPANHE</h3><div className="mt-5 flex gap-3"><a href={instagram} target="_blank" rel="noreferrer" onClick={() => trackEvent("social_click", { platform: "instagram" })} aria-label="Instagram da Adão Terraplenagem" className="flex h-11 w-11 items-center justify-center border border-border transition-colors hover:bg-gold hover:text-primary-foreground"><Instagram className="h-5 w-5" /></a><a href={facebook} target="_blank" rel="noreferrer" onClick={() => trackEvent("social_click", { platform: "facebook" })} aria-label="Facebook da Adão Terraplenagem" className="flex h-11 w-11 items-center justify-center border border-border transition-colors hover:bg-gold hover:text-primary-foreground"><Facebook className="h-5 w-5" /></a></div><span className="mt-3 block text-sm text-muted-foreground">@adaoterraplenagem</span></div>
         </div>
         <div className="border-t border-border"><div className="mx-auto flex max-w-7xl flex-col gap-2 px-5 py-6 text-xs text-muted-foreground sm:flex-row sm:justify-between lg:px-8"><span>© 2026 Adão Terraplenagem. Todos os direitos reservados.</span><span>Araçoiaba da Serra • São Paulo</span></div></div>
       </footer>
 
-      <a href={whatsapp} target="_blank" rel="noreferrer" aria-label="Solicitar orçamento pelo WhatsApp" className="fixed bottom-5 right-5 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-gold text-primary-foreground shadow-xl transition-transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-ring/40"><MessageCircle className="h-8 w-8" fill="currentColor" strokeWidth={1.5} /></a>
+      <a href={whatsapp} target="_blank" rel="noreferrer" onClick={() => trackEvent("whatsapp_click", { location: "floating_button" })} aria-label="Solicitar orçamento pelo WhatsApp" className="fixed bottom-5 right-5 z-50 flex h-16 w-16 items-center justify-center rounded-full bg-gold text-primary-foreground shadow-xl transition-transform hover:scale-105 focus:outline-none focus:ring-4 focus:ring-ring/40"><MessageCircle className="h-8 w-8" fill="currentColor" strokeWidth={1.5} /></a>
     </main>
   );
 }
