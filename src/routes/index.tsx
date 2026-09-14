@@ -491,26 +491,27 @@ function Index() {
           <SectionHeading eyebrow="GALERIA DE OBRAS" title="OBRAS QUE JÁ TRANSFORMAMOS" light />
           <p className="-mt-5 mb-10 max-w-2xl text-lg leading-relaxed text-primary-foreground/70">Alguns dos projetos que já executamos em Sorocaba e região.</p>
         </div>
-        <ScrollRow>
-          <div className="grid grid-cols-2 gap-3 px-5 sm:gap-4 lg:grid-cols-12 lg:px-8">
-          {gallery.map(({ image, title, alt, width, height }, index) => (
-            <figure key={title} className={`group relative min-h-48 overflow-hidden rounded-lg bg-navy-deep shadow-lg ${index < 2 ? "col-span-2 aspect-[4/3] sm:aspect-[16/9] lg:col-span-6" : "aspect-[4/5] lg:col-span-3"}`}>
-              <div className="absolute inset-0 overflow-hidden">
-                <img
-                  src={image}
-                  alt={alt}
-                  width={width}
-                  height={height}
-                  loading="lazy"
-                  decoding="async"
-                  className="h-full w-full object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.035]"
-                />
-              </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/10 to-transparent" />
-              <figcaption className="absolute inset-x-0 bottom-0 border-l-2 border-gold px-3 py-3 font-display text-sm font-extrabold uppercase leading-tight text-foreground sm:px-5 sm:py-5 sm:text-lg">{title}</figcaption>
-            </figure>
-          ))}
+        <div className="mx-auto max-w-7xl px-5 lg:px-8">
+          <div className="grid grid-cols-2 gap-3 sm:gap-4 lg:grid-cols-12">
+            {gallery.map(({ image, title, alt, width, height }, index) => (
+              <figure key={title} className={`group relative min-h-48 overflow-hidden rounded-lg bg-navy-deep shadow-lg ${index < 2 ? "col-span-2 aspect-[4/3] sm:aspect-[16/9] lg:col-span-6" : "aspect-[4/5] lg:col-span-3"}`}>
+                <div className="absolute inset-0 overflow-hidden">
+                  <img
+                    src={image}
+                    alt={alt}
+                    width={width}
+                    height={height}
+                    loading="lazy"
+                    decoding="async"
+                    className="h-full w-full object-cover transition-transform duration-500 motion-safe:group-hover:scale-[1.035]"
+                  />
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-navy-deep/95 via-navy-deep/10 to-transparent" />
+                <figcaption className="absolute inset-x-0 bottom-0 border-l-2 border-gold px-3 py-3 font-display text-sm font-extrabold uppercase leading-tight text-foreground sm:px-5 sm:py-5 sm:text-lg">{title}</figcaption>
+              </figure>
+            ))}
           </div>
+        </div>
       </section>
 
       <section id="atendimento" className="bg-gold py-20 text-primary-foreground lg:py-28">
@@ -561,7 +562,7 @@ function Index() {
           </div>
         </div>
         <ScrollRow>
-          {reviews.map((review, i) => (
+          {reviews.map((review) => (
             <figure key={review.name} className="flex w-[84vw] shrink-0 snap-start flex-col justify-between rounded-lg border border-primary-foreground/15 bg-card p-6 shadow-lg transition-colors hover:border-gold/45 sm:w-88">
               <div>
                 <div className="mb-5 flex items-start justify-between gap-4">
