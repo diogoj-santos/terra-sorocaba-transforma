@@ -300,7 +300,7 @@ function SectionHeading({ eyebrow, title, light = false }: { eyebrow: string; ti
   return (
     <div className="mb-10 max-w-3xl">
       <div className="mb-4 flex items-center gap-3 font-display text-sm font-bold tracking-[0.16em] text-gold"><span className="h-px w-9 bg-gold" />{eyebrow}</div>
-      <h2 className={`font-display text-4xl font-black leading-[0.95] tracking-normal sm:text-5xl lg:text-6xl ${light ? "text-primary-foreground" : "text-foreground"}`}>{title}</h2>
+      <h2 className={`break-words font-display text-4xl font-black leading-[0.95] tracking-normal sm:text-5xl lg:text-6xl ${light ? "text-primary-foreground" : "text-foreground"}`}>{title}</h2>
     </div>
   );
 }
@@ -365,7 +365,7 @@ function Index() {
         <div className="relative mx-auto w-full max-w-7xl px-5 pb-16 lg:px-8 lg:pb-20">
           <div className="max-w-3xl">
             <div className="mb-6 inline-flex items-center gap-3 border-l-2 border-gold pl-4 font-display text-sm font-bold tracking-[0.14em] text-gold sm:text-base">EXPERIÊNCIA QUE PREPARA O FUTURO</div>
-            <h1 className="font-display text-5xl font-black uppercase leading-[0.91] tracking-normal text-foreground sm:text-7xl lg:text-[5.5rem]">Há 14 anos<br /><span className="text-gold">transformando terrenos</span> em Sorocaba e região</h1>
+            <h1 className="break-words font-display text-4xl font-black uppercase leading-[0.95] tracking-normal text-foreground sm:text-7xl lg:text-[5.5rem]">Há 14 anos<br /><span className="text-gold">transformando terrenos</span> em Sorocaba e região</h1>
             <p className="mt-7 max-w-2xl text-base leading-relaxed text-foreground/80 sm:text-xl">Soluções completas para residências, condomínios, empresas, construtoras e propriedades rurais — com máquinas próprias e equipe experiente.</p>
             <div className="mt-9 flex flex-col items-start gap-5 sm:flex-row sm:items-center">
               <WhatsAppButton location="hero" />
@@ -463,7 +463,7 @@ function Index() {
           <div className="grid gap-10 lg:grid-cols-[0.8fr_1.2fr]">
             <div>
               <div className="mb-4 flex items-center gap-3 font-display text-sm font-bold tracking-[0.16em]"><span className="h-px w-9 bg-primary-foreground" />COMO FUNCIONA</div>
-              <h2 className="font-display text-5xl font-black uppercase leading-[0.92] sm:text-6xl">DO PRIMEIRO CONTATO AO TERRENO PRONTO.</h2>
+              <h2 className="break-words font-display text-4xl font-black uppercase leading-[0.92] sm:text-6xl">DO PRIMEIRO CONTATO AO TERRENO PRONTO.</h2>
               <div className="mt-8 border-l-4 border-primary-foreground bg-primary-foreground/10 p-5"><strong className="font-display text-xl font-black">ORÇAMENTO GRATUITO</strong><span className="mt-1 block font-display text-sm font-bold">AVALIAÇÃO PRESENCIAL GRATUITA</span></div>
               <div className="mt-7"><WhatsAppButton label="AGENDAR MINHA AVALIAÇÃO" dark location="atendimento" /></div>
             </div>
@@ -538,7 +538,7 @@ function Index() {
 
       <section className="border-y border-border bg-surface-raised py-16">
         <div className="mx-auto flex max-w-7xl flex-col items-start justify-between gap-8 px-5 lg:flex-row lg:items-center lg:px-8">
-          <div className="max-w-2xl"><span className="font-display text-sm font-bold tracking-[0.15em] text-gold">SEU PROJETO COMEÇA PELO TERRENO</span><h2 className="mt-3 font-display text-4xl font-black uppercase leading-none sm:text-5xl">Vamos conversar sobre a sua obra?</h2></div>
+          <div className="max-w-2xl"><span className="font-display text-sm font-bold tracking-[0.15em] text-gold">SEU PROJETO COMEÇA PELO TERRENO</span><h2 className="break-words mt-3 font-display text-4xl font-black uppercase leading-none sm:text-5xl">Vamos conversar sobre a sua obra?</h2></div>
           <WhatsAppButton location="cta_final" />
         </div>
       </section>
