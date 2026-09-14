@@ -1,9 +1,11 @@
+import { useRef } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 import {
   ArrowRight,
   BadgeCheck,
   Building2,
   CheckCircle2,
+  ChevronLeft,
   ChevronRight,
   CircleDot,
   Construction,
@@ -194,6 +196,8 @@ const gallery = [
 
 const cities = ["Sorocaba", "Araçoiaba da Serra", "Votorantim", "Tatuí", "Cerquilho", "Alumínio", "Piedade", "Iperó", "Salto de Pirapora", "Capela do Alto"];
 
+const avatarColors = ["bg-teal-700", "bg-amber-700", "bg-rose-700", "bg-indigo-600", "bg-pink-600", "bg-emerald-700", "bg-purple-600", "bg-sky-700"];
+
 const reviews = [
   { name: "Marinho Marte", text: "Profissionais competentes e atenciosos. Super recomendo, preço justo. Logo vou contratá-lo novamente." },
   { name: "Daf Jay", text: "Adão é um excelente parceiro de obras, já construí algumas casas com ele fazendo as terraplenagens pra mim com um trabalho de excelente qualidade, preço justo e pontualidade." },
@@ -250,6 +254,42 @@ function WhatsAppButton({ label = "SOLICITAR ORÇAMENTO GRÁTIS", dark = false, 
       {label}
       <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
     </a>
+  );
+}
+
+function ScrollRow({ children, edgeClass = "px-5 lg:px-8" }: { children: React.ReactNode; edgeClass?: string }) {
+  const trackRef = useRef<HTMLDivElement>(null);
+  const scroll = (direction: 1 | -1) => {
+    const el = trackRef.current;
+    if (!el) return;
+    el.scrollBy({ left: direction * el.clientWidth * 0.82, behavior: "smooth" });
+  };
+  return (
+    <div className="relative">
+      <div
+        ref={trackRef}
+        className={`scrollbar-none flex snap-x snap-mandatory gap-3 overflow-x-auto pb-4 lg:gap-4 ${edgeClass}`}
+        style={{ scrollbarWidth: "none" }}
+      >
+        {children}
+      </div>
+      <button
+        type="button"
+        onClick={() => scroll(-1)}
+        aria-label="Ver anteriores"
+        className="absolute left-2 top-[38%] hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-background text-foreground shadow-lg transition-transform hover:scale-105 sm:flex"
+      >
+        <ChevronLeft className="h-5 w-5" />
+      </button>
+      <button
+        type="button"
+        onClick={() => scroll(1)}
+        aria-label="Ver próximos"
+        className="absolute right-2 top-[38%] hidden h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full bg-background text-foreground shadow-lg transition-transform hover:scale-105 sm:flex"
+      >
+        <ChevronRight className="h-5 w-5" />
+      </button>
+    </div>
   );
 }
 
@@ -356,11 +396,11 @@ function Index() {
       <section id="galeria" className="bg-foreground py-20 text-primary-foreground lg:py-28">
         <div className="mx-auto max-w-7xl px-5 lg:px-8">
           <SectionHeading eyebrow="GALERIA DE OBRAS" title="OBRAS QUE JÁ TRANSFORMAMOS" light />
-          <p className="-mt-5 mb-10 max-w-2xl text-lg leading-relaxed text-primary-foreground/70">Alguns dos projetos que já executamos em Sorocaba e região. Arraste para o lado para ver mais.</p>
+          <p className="-mt-5 mb-10 max-w-2xl text-lg leading-relaxed text-primary-foreground/70">Alguns dos projetos que já executamos em Sorocaba e região.</p>
         </div>
-        <div className="scrollbar-none flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-4 lg:gap-4 lg:px-8" style={{ scrollbarWidth: "none" }}>
+        <ScrollRow>
           {gallery.map(({ image, title, alt, width, height }) => (
-            <figure key={title} className="group w-[68vw] shrink-0 snap-start overflow-hidden bg-navy-deep sm:w-64 lg:w-72">
+            <figure key={title} className="group w-[68vw] shrink-0 snap-start overflow-hidden rounded-lg bg-navy-deep sm:w-64 lg:w-72">
               <div className="aspect-[4/3] overflow-hidden">
                 <img
                   src={image}
@@ -375,7 +415,7 @@ function Index() {
               <figcaption className="border-t-2 border-gold px-3 py-4 font-display text-sm font-extrabold uppercase leading-tight text-foreground sm:text-base">{title}</figcaption>
             </figure>
           ))}
-        </div>
+        </ScrollRow>
       </section>
 
       <section id="atendimento" className="bg-gold py-20 text-primary-foreground lg:py-28">
@@ -421,17 +461,22 @@ function Index() {
             </div>
           </div>
         </div>
-        <div className="scrollbar-none flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-4 lg:gap-4 lg:px-8" style={{ scrollbarWidth: "none" }}>
-          {reviews.map((review) => (
-            <figure key={review.name} className="flex w-[78vw] shrink-0 snap-start flex-col justify-between border border-primary-foreground/15 bg-card p-6 sm:w-80">
+        <ScrollRow>
+          {reviews.map((review, i) => (
+            <figure key={review.name} className="flex w-[78vw] shrink-0 snap-start flex-col justify-between rounded-lg border border-primary-foreground/15 bg-card p-6 sm:w-80">
               <div>
-                <div className="flex gap-0.5">{Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-4 w-4 fill-gold text-gold" />)}</div>
+                <div className="flex items-center gap-3">
+                  <span className={`flex h-11 w-11 shrink-0 items-center justify-center rounded-full font-display text-lg font-bold text-white ${avatarColors[i % avatarColors.length]}`}>{review.name.charAt(0)}</span>
+                  <div>
+                    <figcaption className="font-display text-sm font-bold uppercase tracking-[0.02em] text-foreground">{review.name}</figcaption>
+                    <div className="mt-1 flex gap-0.5">{Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-3.5 w-3.5 fill-gold text-gold" />)}</div>
+                  </div>
+                </div>
                 <blockquote className="mt-4 leading-relaxed text-muted-foreground">"{review.text}"</blockquote>
               </div>
-              <figcaption className="mt-6 font-display text-sm font-bold uppercase tracking-[0.04em] text-foreground">{review.name}</figcaption>
             </figure>
           ))}
-        </div>
+        </ScrollRow>
       </section>
 
       <section id="faq" className="py-20 lg:py-28">
