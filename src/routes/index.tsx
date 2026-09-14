@@ -22,6 +22,7 @@ import {
   ShieldCheck,
   Shovel,
   Sparkles,
+  Star,
   Tractor,
   Trash2,
   Truck,
@@ -90,6 +91,17 @@ export const Route = createFileRoute("/")({
         makesOffer: services.map((s) => ({
           "@type": "Offer",
           itemOffered: { "@type": "Service", name: s.title, description: s.text },
+        })),
+        aggregateRating: {
+          "@type": "AggregateRating",
+          ratingValue: "5.0",
+          reviewCount: reviews.length,
+        },
+        review: reviews.map((r) => ({
+          "@type": "Review",
+          author: { "@type": "Person", name: r.name },
+          reviewRating: { "@type": "Rating", ratingValue: "5", bestRating: "5" },
+          reviewBody: r.text,
         })),
         description: "Serviços de terraplenagem (terraplanagem) em Sorocaba e Araçoiaba da Serra, incluindo escavações, nivelamento, aterros, demolições e preparação de terrenos.",
       }),
@@ -181,6 +193,17 @@ const gallery = [
 ];
 
 const cities = ["Sorocaba", "Araçoiaba da Serra", "Votorantim", "Tatuí", "Cerquilho", "Alumínio", "Piedade", "Iperó", "Salto de Pirapora", "Capela do Alto"];
+
+const reviews = [
+  { name: "Marinho Marte", text: "Profissionais competentes e atenciosos. Super recomendo, preço justo. Logo vou contratá-lo novamente." },
+  { name: "Daf Jay", text: "Adão é um excelente parceiro de obras, já construí algumas casas com ele fazendo as terraplenagens pra mim com um trabalho de excelente qualidade, preço justo e pontualidade." },
+  { name: "Grega Córdova", text: "Excelente profissional, equipe empenhada em oferecer o melhor. Obrigada pelo serviços de terraplanagem prestados. Sucesso" },
+  { name: "Robson INNOVAZIONE", text: "Excelente empresa, bem organizada e com profissionais técnicos que fazem total diferença na obra! Sempre indico e nas atividades que a Innovazione atua sempre incluímos como parceiros. Equipe sensacional." },
+  { name: "João Ricardo Feitoza", text: "Empresa excelente, cumpre prazos e orçamentos com serviço de alta qualidade!" },
+  { name: "Lizandra Fabiele", text: "Ótimo trabalho, profissionais excelentes e um atendimento de qualidade. Serviço feito com muito cuidado e profissionalismo. Recomendo!" },
+  { name: "Juliana Rodrigues", text: "Trabalho feito com muita excelência e profissionalismo." },
+  { name: "José Carlos Vieira", text: "Excelente serviço. Pessoal bem qualificado e atencioso." },
+];
 
 const faq = [
   {
@@ -385,6 +408,29 @@ function Index() {
               {cities.map((city, i) => <div key={city} className="flex items-center gap-4 bg-background p-5"><span className="font-display text-xs font-bold text-gold">{String(i + 1).padStart(2, '0')}</span><MapPin className="h-5 w-5 text-gold" /><span className="font-display text-lg font-bold uppercase">{city}</span></div>)}
             </div>
           </div>
+        </div>
+      </section>
+
+      <section id="depoimentos" className="bg-navy-deep py-20 lg:py-28">
+        <div className="mx-auto max-w-7xl px-5 lg:px-8">
+          <div className="flex flex-wrap items-end justify-between gap-6">
+            <SectionHeading eyebrow="QUEM JÁ CONTRATOU" title="AVALIAÇÕES DE CLIENTES" light />
+            <div className="mb-10 flex items-center gap-2 text-primary-foreground">
+              <div className="flex gap-0.5">{Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-5 w-5 fill-gold text-gold" />)}</div>
+              <span className="font-display text-sm font-bold">5.0 no Google · {reviews.length} avaliações</span>
+            </div>
+          </div>
+        </div>
+        <div className="scrollbar-none flex snap-x snap-mandatory gap-3 overflow-x-auto px-5 pb-4 lg:gap-4 lg:px-8" style={{ scrollbarWidth: "none" }}>
+          {reviews.map((review) => (
+            <figure key={review.name} className="flex w-[78vw] shrink-0 snap-start flex-col justify-between border border-primary-foreground/15 bg-card p-6 sm:w-80">
+              <div>
+                <div className="flex gap-0.5">{Array.from({ length: 5 }).map((_, i) => <Star key={i} className="h-4 w-4 fill-gold text-gold" />)}</div>
+                <blockquote className="mt-4 leading-relaxed text-muted-foreground">"{review.text}"</blockquote>
+              </div>
+              <figcaption className="mt-6 font-display text-sm font-bold uppercase tracking-[0.04em] text-foreground">{review.name}</figcaption>
+            </figure>
+          ))}
         </div>
       </section>
 
